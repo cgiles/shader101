@@ -3,14 +3,10 @@
 //--------------------------------------------------------------
 void ofApp::setup(){
 	shader.load("shader/shaderInterac");
-	float planeScale = 0.75;
-	int planeWidth = ofGetWidth()*planeScale;
-	int planeHeight = ofGetHeight()*planeScale;
-	int planeGridSize = 20;
-	int planeColumns = planeWidth / planeGridSize;
-	int planeRows = planeHeight / planeGridSize;
+	
+	img.load("img.png");
 
-	plane.set(planeWidth, planeHeight, planeColumns, planeRows, OF_PRIMITIVE_TRIANGLES);
+	plane.set(800,600,10,10, OF_PRIMITIVE_TRIANGLES);
 }
 
 //--------------------------------------------------------------
@@ -21,6 +17,7 @@ void ofApp::update(){
 //--------------------------------------------------------------
 void ofApp::draw(){
 	
+
 	
 	shader.begin();
 	//center of picture

@@ -34,7 +34,7 @@ void ofApp::draw(){
 	// set uniform2
 	shader.setUniform2f("mousePos", mX, mY);
 
-	float percentX = mouseX / (float)ofGetWidth();
+	float percentX = mouseX / (float)ofGetWidth(); 
 	percentX = ofClamp(percentX, 0, 1.0);
 	ofFloatColor colorLeft = ofColor::yellow;
 	ofFloatColor colorRight = ofColor::red;

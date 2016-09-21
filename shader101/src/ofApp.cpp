@@ -2,7 +2,7 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-	shader.load("shader/shaderPlane");
+	shader.load("shader/shaderInterac");
 	float planeScale = 0.75;
 	int planeWidth = ofGetWidth()*planeScale;
 	int planeHeight = ofGetHeight()*planeScale;
@@ -20,23 +20,31 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-	float percentX = mouseX / (float)ofGetWidth();
-	percentX = ofClamp(percentX, 0.0, 1.0);
-	ofColor colorLeft = ofColor::magenta;
-	ofColor colorRight = ofColor::cyan;
-	ofColor colorMix = colorLeft.getLerped(colorRight, percentX);
 	
-
-	ofSetColor(colorMix);
 	
 	shader.begin();
-	shader.setUniform1f("time", ofGetElapsedTimef());
-	float tx = ofGetWidth() / 2;
-	float ty = ofGetHeight() / 2;
-	float percentY = mouseY / (float)ofGetHeight();
-	float rotation = ofMap(percentY, 0.0, 1.0, -60, 60) + 60;
-	ofTranslate(tx, ty);
-	ofRotate(rotation, 1, 0, 0);
+	//center of picture
+	float cX = ofGetWidth() / 2.0;
+	float cY = ofGetHeight() / 2.0;
+	// mouse distance from the center
+	float mX = mouseX - cX;
+	float mY = mouseY - cY;
+	// set uniform1
+	shader.setUniform1f("mouseRange", 150.0);
+	// set uniform2
+	shader.setUniform2f("mousePos", mX, mY);
+
+	float percentX = mouseX / (float)ofGetWidth();
+	percentX = ofClamp(percentX, 0, 1.0);
+	ofFloatColor colorLeft = ofColor::yellow;
+	ofFloatColor colorRight = ofColor::red;
+	ofFloatColor colorMix = colorLeft.getLerped(colorRight, percentX);
+	
+	float mouseColor[4] = {colorMix.r,colorMix.g ,colorMix.b ,colorMix.a};
+	
+	shader.setUniform4fv("mouseColor", &mouseColor[0]);
+
+	ofTranslate(cX, cY);
 
 	plane.drawWireframe();
 	shader.end();
